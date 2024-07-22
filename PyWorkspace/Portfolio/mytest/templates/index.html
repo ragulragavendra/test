@@ -1,15 +1,44 @@
-{%load static %}
-{%extends 'header.html'%}
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>My Test</title>
-        <link rel="stylesheet" href="{% static 'css/style.css' %}"
-    </head>
-    {%block header %}
-    (%endblock%)
-    <body>
-        <h1> Hi Ragul welcome to Django course</h1>
-        <h4> Have a nice day :)</h4>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX GET Request Example</title>
+    <script>
+        function makeGetRequest() {
+            var xhr = new XMLHttpRequest();
+            var proxyUrl = "http://127.0.0.1:8000/mytest/proxy/";
+            
+            xhr.open("GET", proxyUrl, true);
+            
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        console.log("Response received:", xhr.responseText);
+                    } else {
+                        console.error("Error:", xhr.status, xhr.statusText);
+                    }
+                }
+            };
+
+            xhr.onerror = function () {
+                console.error("Request failed.");
+            };
+
+            xhr.ontimeout = function () {
+                console.error("Request timed out.");
+            };
+
+            xhr.timeout = 5000; // Set timeout to 5 seconds
+
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+    <button onclick="makeGetRequest()">Click me</button>
+</body>
 </html>
+
+
